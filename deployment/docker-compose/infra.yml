@@ -1,0 +1,31 @@
+version: "3.8"
+name: "bookstore-spring-boot-microservices"
+services:
+  catalog-db:
+    image: postgres:16-alpine
+    container_name: catalog-db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - "15432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 500m
+  
+
+  # portainer - for managing containers
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    ports:
+      - "9000:9000"  # Web UI
+      - "8000:8000"  # Edge agent
+    restart: unless-stopped
