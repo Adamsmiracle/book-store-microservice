@@ -11,7 +11,7 @@
   <groupId>com.bookstore</groupId>
   <artifactId>catalog-service</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name/>
+  <name>catalog-service</name>
   <description/>
   <url/>
   <licenses>
@@ -28,6 +28,7 @@
   </scm>
   <properties>
     <java.version>25</java.version>
+    <dockerImageName>bookstore-${project.artifactId}</dockerImageName>
   </properties>
   <dependencies>
     <dependency>
@@ -53,6 +54,12 @@
     <dependency>
       <groupId>org.flywaydb</groupId>
       <artifactId>flyway-database-postgresql</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.42</version>
     </dependency>
 
     <dependency>
@@ -132,6 +139,12 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <image>
+            <name>${dockerImageName}</name>
+            <!-- <builder></builder> -->
+          </image>
+        </configuration>
         <executions>
           <execution>
             <goals>
@@ -159,6 +172,11 @@
                 <path>
                   <groupId>org.springframework.boot</groupId>
                   <artifactId>spring-boot-configuration-processor</artifactId>
+                </path>
+                <path>
+                  <groupId>org.projectlombok</groupId>
+                  <artifactId>lombok</artifactId>
+                  <version>1.18.42</version>
                 </path>
               </annotationProcessorPaths>
             </configuration>

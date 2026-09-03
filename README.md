@@ -16,6 +16,7 @@
  - Git
  - Docker and Docker Compose, or the runtime required by the application
  - A database configured for the service
+ - [Task](https://taskfile.dev/) (`task`), a task runner used for project commands
 
  ### Run locally
 
@@ -112,10 +113,42 @@
 
  Before opening a pull request:
 
- - Run the formatter and linter
+ - Run the formatter (see [Code formatting](#code-formatting))
  - Run the full test suite
  - Update API documentation when behavior changes
  - Add tests for new functionality
+
+ ### Code formatting
+
+ Java code is formatted with [Spotless](https://github.com/diffplug/spotless) using Google Java Format. It's configured in both the root `pom.xml` and `catalog-service/pom.xml`, and is bound to the `check` goal, so `./mvnw verify` fails if any file isn't formatted.
+
+ Check formatting:
+
+ ```bash
+ ./mvnw spotless:check
+ ```
+
+ Auto-format all files:
+
+ ```bash
+ ./mvnw spotless:apply
+ ```
+
+ Run against a single module, e.g. `catalog-service`:
+
+ ```bash
+ ./mvnw -pl catalog-service spotless:apply
+ ```
+
+ ## Building a container image
+
+ Each service uses Spring Boot's Cloud Native Buildpacks support to build a container image without a Dockerfile.
+
+ Build the `catalog-service` image:
+
+ ```bash
+ ./mvnw -pl catalog-service spring-boot:build-image -DskipTests
+ ```
 
  ## License
 
