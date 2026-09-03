@@ -38,7 +38,7 @@ class ProductControllerTest extends AbstractIT {
     void shouldReturnProductByCode() {
         Product product = given().contentType(ContentType.JSON)
                 .when()
-                .get("/api/products/{code}", "P001")
+                .get("/api/products/{code}", "P100")
                 .then()
                 .statusCode(200)
                 .assertThat()
@@ -49,7 +49,7 @@ class ProductControllerTest extends AbstractIT {
         assertThat(product.code()).isEqualTo("P100");
         assertThat(product.name()).isEqualTo("The Hunger Games");
         assertThat(product.description()).isEqualTo("Winning will make you famous. Losing means certain death...");
-        assertThat(product.price()).isEqualTo(new BigDecimal("34.0"));
+        assertThat(product.price()).isEqualByComparingTo(new BigDecimal("34.0"));
     }
 
     @Test
@@ -57,7 +57,7 @@ class ProductControllerTest extends AbstractIT {
         String code = "invalid_product_code";
         given().contentType(ContentType.JSON)
                 .when()
-                .get("/api/products/{code?")
+                .get("/api/products/{code}", code)
                 .then()
                 .statusCode(404)
                 .body("title", is("Product Not Found"))
