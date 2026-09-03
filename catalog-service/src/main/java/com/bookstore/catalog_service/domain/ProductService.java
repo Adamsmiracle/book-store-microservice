@@ -1,9 +1,7 @@
 package com.bookstore.catalog_service.domain;
 
 import com.bookstore.catalog_service.ApplicationProperties;
-
 import java.util.Optional;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -40,12 +38,8 @@ public class ProductService {
         productsPage.hasPrevious());
   }
 
-
-
-//   Get a product by its code.
+  //   Get a product by its code.
   public Optional<Product> getProductByCode(String code) {
     return productRepository.findByCode(code).map(ProductMapper::toProduct);
   }
-
-  
 }
